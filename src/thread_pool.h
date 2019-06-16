@@ -31,7 +31,7 @@
 #endif
 
 #define BUSY_THRESHOLD 0.5	//(busy thread)/(all thread threshold)
-#define MANAGE_INTERVAL 30	//tp manage thread sleep interval, every MANAGE_INTERVAL seconds, manager thread will try to recover idle threads as BUSY_THRESHOLD
+#define MANAGE_INTERVAL 2	//tp manage thread sleep interval, every MANAGE_INTERVAL seconds, manager thread will try to recover idle threads as BUSY_THRESHOLD
 
 typedef struct tp_thread_info_s TpThreadInfo;
 typedef struct tp_thread_pool_s TpThreadPool;
@@ -60,7 +60,7 @@ struct tp_thread_pool_s {
 	pthread_cond_t loop_cond;
 	
 	TpThreadInfo *thread_info;
-	TSQueue *idle_q; //idle queue
+	TSQueue *idle_q; //idle queue 存储线程池空闲线程指针的队列,用于从线程池快速取得空闲线程；
 	BOOL stop_flag; //whether stop the threading pool
 	
 	pthread_t manage_thread_id; //manage thread id num
